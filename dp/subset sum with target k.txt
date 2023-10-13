@@ -1,0 +1,29 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static boolean soln(int i,int target,int arr[],int arr1[][]){
+        if(target==0){
+            return true;
+        }
+        if(i==0){
+            return arr[i]==target;
+        }
+        if(arr1[i][target]!=-1){
+            return arr1[i][target]==1?true:false;
+        }
+        boolean take=false;
+        if(arr[i]<=target){
+            take=soln(i-1,target-arr[i],arr,arr1);
+        }
+        boolean notake=soln(i-1,target,arr,arr1);
+        arr1[i][target]=take||notake?1:0;
+        return take||notake;
+    }
+    public static boolean subsetSumToK(int n, int k, int arr[]){
+        int arr1[][]=new int [n][k+1];
+        for(int arr2[]:arr1){
+            Arrays.fill(arr2,-1);
+        }
+       return soln(n-1,k,arr,arr1);
+    }  
+}
