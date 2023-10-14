@@ -1,0 +1,38 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    static int mod=(int)1e9+7;
+    public static int soln(int i,int target,int arr[],int dp[][]){
+    if(target==0){
+        return 1;
+    }
+    if(i==0){
+        if(arr[0]-target==0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+        
+    }
+    if(dp[i][target]!=-1){
+            return dp[i][target];
+        }
+    int notake=soln(i-1,target,arr,dp);
+    int take=0;
+    if(arr[i]<=target){
+        take=soln(i-1,target-arr[i],arr,dp);
+    }
+    return dp[i][target]=(take+notake)%mod;
+
+}
+    public static int findWays(int num[], int tar) {
+        // Write your code here.
+        int dp[][]=new int[num.length][tar+1];
+        for(int arr1[]:dp){
+            Arrays.fill(arr1,-1);
+        }
+        return soln(num.length-1,tar,num,dp);
+    }
+}
