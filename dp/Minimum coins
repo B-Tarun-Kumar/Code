@@ -1,0 +1,35 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static int soln(int i,int arr[],int target,int dp[][]){
+         if(i==0){
+             if(target%arr[0]==0){
+                 return target/arr[0];
+             }
+             return (int)Math.pow(10,9);
+         }
+         if(dp[i][target]!=-1){
+             return dp[i][target];
+         }
+         int notake=soln(i-1,arr,target,dp);
+         int take=Integer.MAX_VALUE;
+         if(arr[i]<=target){
+             take=1+soln(i,arr,target-arr[i],dp);
+         }
+         return dp[i][target]=Math.min(take,notake);
+    }
+    public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        int dp[][]=new int[num.length][x+1];
+        for(int arr1[]:dp){
+            Arrays.fill(arr1,-1);
+        }
+        int ans= soln(num.length-1,num,x,dp);
+        if(ans>=Math.pow(10,9)){
+        return -1;
+        }
+        return ans;
+
+    }
+
+}
