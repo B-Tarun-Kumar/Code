@@ -1,0 +1,28 @@
+import java.util.* ;
+import java.io.*; 
+
+public class Solution{
+    static int soln(int i,int w[],int v[],int wt,int dp[][]){
+        if(i==0){
+            if(w[0]<=wt){
+                return v[0];
+            }
+            return 0;
+        }
+        if(dp[i][wt]!=-1)return dp[i][wt];
+        int notake=soln(i-1,w,v,wt,dp);
+        int take=Integer.MIN_VALUE;
+        if(w[i]<=wt){
+            take=v[i]+soln(i-1,w,v,wt-w[i],dp);
+        }
+        return dp[i][wt]=Math.max(take,notake);
+    }
+    static int knapsack(int[] weight, int[] value, int n, int maxWeight) {
+        int dp[][]=new int[n][maxWeight+1];
+        for(int arr[]:dp){
+            Arrays.fill(arr,-1);
+        }
+      return soln(n-1,weight,value,maxWeight,dp);
+
+    }
+}
