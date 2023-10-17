@@ -1,0 +1,30 @@
+import java.util.*;
+public class Solution {
+    public static int soln(int i,int w[],int v[],int maxwt,int dp[][]){
+        if(i==0){
+            if(w[i]<=maxwt&&maxwt%w[i]==0){
+                return v[i]*(maxwt/w[i]);
+            }
+            return 0;
+        }
+        if(dp[i][maxwt]!=-1){
+            return dp[i][maxwt];
+        }
+
+        int notake=soln(i-1,w,v,maxwt,dp);
+        int take=Integer.MIN_VALUE;
+        if(w[i]<=maxwt){
+            take=v[i]+soln(i,w,v,maxwt-w[i],dp);
+        }
+        return dp[i][maxwt]=Math.max(take,notake);
+
+    }
+    public static int unboundedKnapsack(int n, int w, int[] profit, int[] weight) {
+        // Write your code here.
+        int dp[][]=new int [n][w+1];
+        for(int arr1[]:dp){
+            Arrays.fill(arr1,-1);
+        }
+        return soln(n-1,weight,profit,w,dp);
+    }
+}
